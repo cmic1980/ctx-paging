@@ -8,6 +8,7 @@ import com.github.pagehelper.PageHelper;
  */
 public class PageHelperContainer {
     protected static final ThreadLocal<Page> LOCAL_PAGE = new ThreadLocal<Page>();
+    protected static final ThreadLocal<PagingResult> PAGING_RESULT = new ThreadLocal<PagingResult>();
 
     public static void setPage(Page page) {
         LOCAL_PAGE.set(page);
@@ -20,12 +21,13 @@ public class PageHelperContainer {
         }
     }
 
-    public static void clear() {
+    public static void end(PagingResult result) {
+        PAGING_RESULT.set(result);
         PageHelper.clearPage();
     }
 
-    public static Page getPage() {
-       var page = LOCAL_PAGE.get();
-       return page;
+    public static PagingResult getResult() {
+       var result = PAGING_RESULT.get();
+       return result;
     }
 }

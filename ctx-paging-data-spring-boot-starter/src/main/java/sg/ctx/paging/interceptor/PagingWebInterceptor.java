@@ -44,6 +44,8 @@ public class PagingWebInterceptor implements HandlerInterceptor, ResponseBodyAdv
             page.setPageNum(pageNUmber);
             page.setPageSize(pageSize);
             PageHelperContainer.setPage(page);
+        }else{
+            PageHelperContainer.setPage(null);
         }
         return true;
     }
@@ -55,11 +57,11 @@ public class PagingWebInterceptor implements HandlerInterceptor, ResponseBodyAdv
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        Page page = PageHelperContainer.getPage();
-        if (page != null) {
-            response.getHeaders().add(PagingConfiguration.PAGE_NUMBER_TAG, String.valueOf(page.getPageNum()));
-            response.getHeaders().add(PagingConfiguration.PAGE_SIZE_TAG, String.valueOf(page.getPageSize()));
-            response.getHeaders().add(PagingConfiguration.PAGE_COUNT_TAG, String.valueOf(page.getPages()));
+        var pageResult = PageHelperContainer.getResult();
+        if (pageResult != null) {
+            response.getHeaders().add(PagingConfiguration.PAGE_NUMBER_TAG, String.valueOf(pageResult.getPageNum()));
+            response.getHeaders().add(PagingConfiguration.PAGE_SIZE_TAG, String.valueOf(pageResult.getPageSize()));
+            response.getHeaders().add(PagingConfiguration.PAGE_COUNT_TAG, String.valueOf(pageResult.getPages()));
         }
         return body;
     }
