@@ -28,9 +28,9 @@ public class FeignClientPagingInterceptor implements RequestInterceptor, Respons
                 .getRequestAttributes();
         var request = attributes.getRequest();
 
-        var pageNUmberString = request.getHeader(PagingConfiguration.PAGE_NUMBER_TAG);
-        if (StringUtils.isNotEmpty(pageNUmberString)) {
-            template.header(PagingConfiguration.PAGE_NUMBER_TAG, pageNUmberString);
+        var pageNumberString = request.getHeader(PagingConfiguration.PAGE_NUMBER_TAG);
+        if (StringUtils.isNotEmpty(pageNumberString)) {
+            template.header(PagingConfiguration.PAGE_NUMBER_TAG, pageNumberString);
         }
 
         var pageSizeString = request.getHeader(PagingConfiguration.PAGE_SIZE_TAG);

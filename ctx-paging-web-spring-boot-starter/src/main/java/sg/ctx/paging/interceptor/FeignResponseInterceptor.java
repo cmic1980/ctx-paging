@@ -24,6 +24,8 @@ public class FeignResponseInterceptor implements Interceptor {
         //第一步，获得chain内的request
         Request serviceRequest = chain.request();
 
+        var url = serviceRequest.url();
+
         //第二步，用chain执行request
         Response serviceResponse = chain.proceed(serviceRequest);
 
