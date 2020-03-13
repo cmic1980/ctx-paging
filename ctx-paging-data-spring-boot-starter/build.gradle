@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+    id 'maven-publish' //添加这个plugin
+}
+
+group 'sg.ctx.paging'
+version '1.0.1'
+
+sourceCompatibility = 1.11
+
+repositories {
+    maven { url 'https://nexus.ctx.com.sg/repository/maven-public/' }
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+
+
+}
+
+dependencies {
+    implementation 'com.alibaba:fastjson:1.2.56'
+    implementation 'org.apache.commons:commons-lang3:3.8.1'
+    implementation 'org.springframework.boot:spring-boot-starter:2.1.4.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.1.4.RELEASE'
+
+    compile 'com.github.pagehelper:pagehelper:5.1.11'
+}
+
+//打包源码
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            //指定group/artifact/version信息，可以不填。默认使用项目group/name/version作为groupId/artifactId/version
+            groupId project.group
+            artifactId project.name
+            version project.version
+            //如果是war包填写components.web，如果是jar包填写components.java
+            from components.java
+
+            //配置上传源码
+            artifact sourceJar {
+                classifier "sources"
+            }
+
+        }
+    }
+    repositories {
+        maven {
+            //指定要上传的maven私服仓库
+            url = "https://nexus.ctx.com.sg/repository/maven-releases/"
+            //认证用户和密码
+            credentials {
+                username 'r_miaoyu'
+                password 'Thisis#2020'
+            }
+        }
+    }
+}
+

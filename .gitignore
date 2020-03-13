@@ -1,0 +1,6 @@
+# Project exclude paths
+/.gradle/
+/ctx-paging-data-spring-boot-starter/build/
+/ctx-paging-data-spring-boot-starter/build/classes/java/main/
+/ctx-paging-web-spring-boot-starter/build/
+/ctx-paging-web-spring-boot-starter/build/classes/java/main/

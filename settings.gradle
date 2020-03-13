@@ -1,0 +1,5 @@
+rootProject.name = 'ctx-paging'
+include 'ctx-paging-spring-boot-starter'
+include 'ctx-paging-web-spring-boot-starter'
+include 'ctx-paging-data-spring-boot-starter'
+
