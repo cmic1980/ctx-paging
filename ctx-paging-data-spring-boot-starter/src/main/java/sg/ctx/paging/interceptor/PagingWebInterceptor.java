@@ -62,6 +62,7 @@ public class PagingWebInterceptor implements HandlerInterceptor, ResponseBodyAdv
             response.getHeaders().add(PagingConfiguration.PAGE_NUMBER_TAG, String.valueOf(pageResult.getPageNum()));
             response.getHeaders().add(PagingConfiguration.PAGE_SIZE_TAG, String.valueOf(pageResult.getPageSize()));
             response.getHeaders().add(PagingConfiguration.PAGE_COUNT_TAG, String.valueOf(pageResult.getPages()));
+            response.getHeaders().add(PagingConfiguration.TOTAL_TAG, String.valueOf(pageResult.getTotal()));
         }
         return body;
     }

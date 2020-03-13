@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import sg.ctx.paging.PagingResult;
 import sg.ctx.paging.config.PagingConfiguration;
 
 import java.io.IOException;
@@ -16,8 +17,7 @@ import java.io.IOException;
  * @author yu.miao
  */
 public class FeignResponseInterceptor implements Interceptor {
-
-    public static final ThreadLocal<Page> LOCAL_PAGE = new ThreadLocal<Page>();
+    public static final ThreadLocal<PagingResult> PAGE_RESULT = new ThreadLocal<PagingResult>();
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -32,18 +32,24 @@ public class FeignResponseInterceptor implements Interceptor {
         var pageNumberString = serviceResponse.header(PagingConfiguration.PAGE_NUMBER_TAG);
         var pageSizeString = serviceResponse.header(PagingConfiguration.PAGE_SIZE_TAG);
         var pageCountString = serviceResponse.header(PagingConfiguration.PAGE_COUNT_TAG);
+        var totalString = serviceResponse.header(PagingConfiguration.TOTAL_TAG);
 
-        if(StringUtils.isNotEmpty(pageNumberString) && StringUtils.isNotEmpty(pageNumberString) && StringUtils.isNotEmpty(pageCountString))
+        if(StringUtils.isNotEmpty(pageNumberString)
+                && StringUtils.isNotEmpty(pageNumberString)
+                && StringUtils.isNotEmpty(pageCountString)
+                && StringUtils.isNotEmpty(totalString))
         {
             var pageNumber = Integer.parseInt(pageNumberString);
             var pageSize = Integer.parseInt(pageSizeString);
             var pageCount = Integer.parseInt(pageCountString);
+            var total = Integer.parseInt(totalString);
 
-            var page = new Page();
-            page.setPageNum(pageNumber);
-            page.setPageSize(pageSize);
-            page.setPages(pageCount);
-            LOCAL_PAGE.set(page);
+            var result = new PagingResult();
+            result.setPageNum(pageNumber);
+            result.setPageSize(pageSize);
+            result.setPages(pageCount);
+            result.setTotal(total);
+            PAGE_RESULT.set(result);
         }
 
         //第三步，返回response

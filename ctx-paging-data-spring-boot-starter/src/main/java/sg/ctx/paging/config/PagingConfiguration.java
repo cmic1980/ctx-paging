@@ -8,8 +8,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * @author yu.miao
  */
-public class PagingConfiguration {
+@Configuration
+public class PagingConfiguration implements WebMvcConfigurer {
+
     public static final String PAGE_NUMBER_TAG = "pageNumber";
     public static final String PAGE_SIZE_TAG = "pageSize";
     public static final String PAGE_COUNT_TAG = "pageCount";
+    public static final String TOTAL_TAG = "total";
 }

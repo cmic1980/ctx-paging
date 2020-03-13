@@ -46,11 +46,12 @@ public class FeignClientPagingInterceptor implements RequestInterceptor, Respons
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        var page = FeignResponseInterceptor.LOCAL_PAGE.get();
-        if (page != null) {
-            response.getHeaders().add(PagingConfiguration.PAGE_NUMBER_TAG, String.valueOf(page.getPageNum()));
-            response.getHeaders().add(PagingConfiguration.PAGE_SIZE_TAG, String.valueOf(page.getPageSize()));
-            response.getHeaders().add(PagingConfiguration.PAGE_COUNT_TAG, String.valueOf(page.getPages()));
+        var pageResult = FeignResponseInterceptor.PAGE_RESULT.get();
+        if (pageResult != null) {
+            response.getHeaders().add(PagingConfiguration.PAGE_NUMBER_TAG, String.valueOf(pageResult.getPageNum()));
+            response.getHeaders().add(PagingConfiguration.PAGE_SIZE_TAG, String.valueOf(pageResult.getPageSize()));
+            response.getHeaders().add(PagingConfiguration.PAGE_COUNT_TAG, String.valueOf(pageResult.getPages()));
+            response.getHeaders().add(PagingConfiguration.TOTAL_TAG, String.valueOf(pageResult.getTotal()));
         }
         return body;
     }
