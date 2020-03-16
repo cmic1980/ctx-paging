@@ -23,11 +23,15 @@ public class PageHelperContainer {
 
     public static void end(PagingResult result) {
         PAGING_RESULT.set(result);
+        LOCAL_PAGE.remove();
         PageHelper.clearPage();
     }
 
     public static PagingResult getResult() {
        var result = PAGING_RESULT.get();
+        PAGING_RESULT.remove();
        return result;
     }
+
+
 }
