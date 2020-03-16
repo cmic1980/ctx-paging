@@ -53,6 +53,7 @@ public class FeignClientPagingInterceptor implements RequestInterceptor, Respons
             response.getHeaders().add(PagingConfiguration.PAGE_COUNT_TAG, String.valueOf(pageResult.getPages()));
             response.getHeaders().add(PagingConfiguration.TOTAL_TAG, String.valueOf(pageResult.getTotal()));
         }
+        FeignResponseInterceptor.PAGE_RESULT.remove();
         return body;
     }
 }
